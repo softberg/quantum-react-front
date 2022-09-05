@@ -1,22 +1,23 @@
 import './App.css';
-import { useEffect } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
-import Home from './components/Home/Home';
-import NotFound from './NotFound/NotFound';
-import Posts from './components/Posts/Posts';
-import SignUp from './components/Auth/SignUp';
-import SignIn from './components/Auth/SignIn';
-import About from './components/About/About';
-import MyPosts from './components/MyPosts/MyPosts';
-import Main from './components/Main/Main';
-import RequireAuth from './components/Auth/RequireAuth';
-import useAuth from './hooks/useAuth';
-import SinglePost from './components/Posts/SinglePost/SinglePost';
-import PostForm from './components/MyPosts/PostForm/PostForm';
-import Verify from './components/Auth/Verify';
-import Forget from './components/Auth/Forget';
-import Reset from './components/Auth/Reset';
 import { authMe } from './helpers/helpers';
+import useAuth from './hooks/useAuth';
+import Main from './components/Main/Main';
+
+const Home 			= lazy(() => import('./components/Home/Home'));
+const NotFound 		= lazy(() => import('./NotFound/NotFound'));
+const Posts 		= lazy(() => import('./components/Posts/Posts'));
+const SignUp 		= lazy(() => import('./components/Auth/SignUp'));
+const SignIn 		= lazy(() => import('./components/Auth/SignIn'));
+const About 		= lazy(() => import('./components/About/About'));
+const MyPosts 		= lazy(() => import('./components/MyPosts/MyPosts'));
+const RequireAuth 	= lazy(() => import('./components/Auth/RequireAuth'));
+const SinglePost 	= lazy(() => import('./components/Posts/SinglePost/SinglePost'));
+const PostForm 		= lazy(() => import('./components/MyPosts/PostForm/PostForm'));
+const Verify 		= lazy(() => import('./components/Auth/Verify'));
+const Forget 		= lazy(() => import('./components/Auth/Forget'));
+const Reset 		= lazy(() => import('./components/Auth/Reset'));
 
 function App() {
 	const { setAuth } = useAuth()
@@ -27,26 +28,28 @@ function App() {
 
 
 	return <>
-		<Routes>
-			<Route path="/" element={<Main />}>
-				<Route index element={<Home />} />
-				<Route path="/posts" element={<Posts />} />
-				<Route path="/posts/:postId" element={<SinglePost />} />
-				<Route path="/signup" element={<SignUp />} />
-				<Route path="/signin" element={<SignIn />} />
-				<Route path="/forget" element={<Forget />} />
-				<Route path="/verify" element={<Verify />} />
-				<Route path="/reset/:reset_token" element={<Reset />} />
-				<Route path="/about" element={<About />} />
-				<Route element={<RequireAuth />}>
-					<Route path="/my-posts" element={<MyPosts />} />
-					<Route path="update-post/:postId" element={<PostForm pageTitle='Update Post' />} />
-					<Route path="create-post" element={<PostForm pageTitle='Create Post' />} />
+		<React.Suspense>
+			<Routes>
+				<Route path="/" element={<Main />}>
+					<Route index element={<Home />} />
+					<Route path="/posts" element={<Posts />} />
+					<Route path="/posts/:postId" element={<SinglePost />} />
+					<Route path="/signup" element={<SignUp />} />
+					<Route path="/signin" element={<SignIn />} />
+					<Route path="/forget" element={<Forget />} />
+					<Route path="/verify" element={<Verify />} />
+					<Route path="/reset/:reset_token" element={<Reset />} />
+					<Route path="/about" element={<About />} />
+					<Route element={<RequireAuth />}>
+						<Route path="/my-posts" element={<MyPosts />} />
+						<Route path="update-post/:postId" element={<PostForm pageTitle='Update Post' />} />
+						<Route path="create-post" element={<PostForm pageTitle='Create Post' />} />
+					</Route>
 				</Route>
-			</Route>
-			<Route path="404" element={<NotFound />} />
-			<Route path="*" element={<NotFound />} />
-		</Routes>
+				<Route path="404" element={<NotFound />} />
+				<Route path="*" element={<NotFound />} />
+			</Routes>
+		</React.Suspense>
 	</>
 }
 

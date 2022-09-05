@@ -12,7 +12,6 @@ export const authMe = (setAuth, navigate = null, returnLocation) => {
 					lastname: res.data.data.lastname,
 				}
 			});
-			localStorage.setItem("isAuth", true);
 			if (navigate) {
 				navigate(returnLocation, { replace: true, state: '' });
 			}
@@ -33,5 +32,4 @@ export const authMe = (setAuth, navigate = null, returnLocation) => {
 export const setTokens = (tokens) => {
 	localStorage.setItem("access_token", tokens.access_token);
 	localStorage.setItem("refresh_token", tokens.refresh_token);
-	localStorage.setItem("isAuth", true);
 }
