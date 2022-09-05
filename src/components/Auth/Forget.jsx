@@ -26,6 +26,12 @@ const Forget = () => {
 				<div className="row">
 					<div className=" col s12 l8 offset-l2 center-align white-text">
 						<h1>Forgot password?</h1>
+						{successMessage && <div className="material-alert success left-align" role="alert">
+							{successMessage}
+						</div>}
+						{errorMessage && <div className="material-alert error">
+							{errorMessage}
+						</div>}
 						<div className="card teal accent-4">
 							<div className="card-content">
 								<Formik
@@ -40,13 +46,13 @@ const Forget = () => {
 									}}
 								>
 									{({ errors, touched, handleSubmit }) => (<>
-										<Form onSubmit={e => handleSubmit(e)}>
+										<Form onSubmit={e => handleSubmit(e)} onChange={(() => setSuccessMessage(null), () => setErrorMessage(null))}>
 											<div className="input-field col s12">
 												<label htmlFor="email" className="white-text">Email</label>
 												<Field
 													name="email"
 													type="text"
-													onFocus={(() => setSuccessMessage(null), () => setErrorMessage(null))}
+													
 												/>
 												{errors.email && touched.email ? (
 													<div>{errors.email}</div>
@@ -68,12 +74,6 @@ const Forget = () => {
 								</Formik>
 							</div>
 						</div>
-						{successMessage && <div className="material-alert success left-align" role="alert">
-							{successMessage}
-						</div>}
-						{errorMessage && <div className="material-alert error">
-							{errorMessage}
-						</div>}
 					</div>
 				</div>
 			</div>

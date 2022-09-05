@@ -9,12 +9,15 @@ import { Icon } from 'react-materialize';
 const SignUp = () => {
 	const { auth } = useAuth()
 	const navigate = useNavigate();
+	const [errorMessage, setErrorMessage] = useState(null);
 	const [visibilityToggle, setvisibilityToggle] = useState(false);
 
 	const onSubmitHandler = async (loginData) => {
 		axiosRequest('POST', '/api-signup', loginData).then(res => {
-			if (res.status === 200) {
-				navigate('/signin');
+			if (res.data.status === "success") {
+				navigate('/signin')
+			} else if (res.data.status === 'error') {
+				setErrorMessage(res.data.message.email)
 			}
 		})
 	}
@@ -45,6 +48,9 @@ const SignUp = () => {
 				<div className="row">
 					<div className="col s12 l8 offset-l2 center-align white-text">
 						<h1>Sign Up</h1>
+						{errorMessage && errorMessage.map((message, i) => <div key={i} className="material-alert error">
+							{message}
+						</div>)}
 						<div className="card accent-4 teal">
 							<div className="card-content">
 								<Formik
@@ -62,71 +68,76 @@ const SignUp = () => {
 											firstname: values.firstname,
 											lastname: values.lastname,
 										})
+										setErrorMessage(null)
 									}}
 								>
 									{({ errors, touched, handleSubmit, handleBlur }) => (
-										<>
-											<Form onSubmit={e => handleSubmit(e)}>
-												<div className="form-container">
-													<div className="input-field">
-														<Field
-															onBlur={handleBlur}
-															name="email"
-															type="text"
-														/>
-														{errors.email && touched.email ? (
-															<div>{errors.email}</div>
-														) : null}
-														<label htmlFor="email">Email</label>
-													</div>
-													<div className="input-field p-rel">
-														<label className="auth-form-label" htmlFor="password">Password</label>
-														<Field
-															onBlur={handleBlur}
-															name="password"
-															type={visibilityToggle ? 'text' : 'password'}
-														/>
-														{errors.password && touched.password ? (
-															<div>{errors.password}</div>
-														) : null}
-														<Icon className="visibility-icon" onClick={() => setvisibilityToggle(!visibilityToggle)}>{visibilityToggle ? 'visibility' : 'visibility_off'}</Icon>
-													</div>
-													<div className="input-field">
-														<Field
-															onBlur={handleBlur}
-															name="firstname"
-															type="text"
-														/>
-														{errors.firstname && touched.firstname ? (
-															<div>{errors.firstname}</div>
-														) : null}
-														<label className="auth-form-label" htmlFor="firstname">First name</label>
-													</div>
-													<div className="input-field">
-														<Field
-															onBlur={handleBlur}
-															name="lastname"
-															type="text"
-														/>
-														{errors.lastname && touched.lastname ? (
-															<div>{errors.lastname}</div>
-														) : null}
-														<label className="auth-form-label" htmlFor="firstname">Last name</label>
-													</div>
-													<div className="row">
-														<div className="col s12 right-align">
-															<Link to="/signin"
-																className="white-text">Sign In</Link>
-														</div>
-													</div>
-													<div>
-														<button className="btn btn-large waves-effect waves-light" type="submit">
-															SEND
-														</button>
-													</div>
+										<Form onSubmit={e => handleSubmit(e)} onChange={() => setErrorMessage(null)}>
+											<div className="row">
+												<div className="input-field col s12">
+													<Field
+														onBlur={handleBlur}
+														name="email"
+														type="text"
+													/>
+													{errors.email && touched.email ? (
+														<div>{errors.email}</div>
+													) : null}
+													<label htmlFor="email">Email</label>
 												</div>
-											</Form>
-										</>
+											</div>
+											<div className="row">
+												<div className="input-field col s12">
+													<label className="auth-form-label" htmlFor="password">Password</label>
+													<Field
+														onBlur={handleBlur}
+														name="password"
+														type={visibilityToggle ? 'text' : 'password'}
+													/>
+													{errors.password && touched.password ? (
+														<div>{errors.password}</div>
+													) : null}
+													<Icon className="visibility-icon" onClick={() => setvisibilityToggle(!visibilityToggle)}>{visibilityToggle ? 'visibility' : 'visibility_off'}</Icon>
+												</div>
+											</div>
+											<div className="row">
+												<div className="input-field col s12">
+													<Field
+														onBlur={handleBlur}
+														name="firstname"
+														type="text"
+													/>
+													{errors.firstname && touched.firstname ? (
+														<div>{errors.firstname}</div>
+													) : null}
+													<label className="auth-form-label" htmlFor="firstname">First name</label>
+												</div>
+											</div>
+											<div className="row">
+												<div className="input-field col s12">
+													<Field
+														onBlur={handleBlur}
+														name="lastname"
+														type="text"
+													/>
+													{errors.lastname && touched.lastname ? (
+														<div>{errors.lastname}</div>
+													) : null}
+													<label className="auth-form-label" htmlFor="firstname">Last name</label>
+												</div>
+											</div>
+											<div className="row">
+												<div className="col s12 right-align">
+													<Link to="/signin"
+														className="white-text">Sign In</Link>
+												</div>
+											</div>
+											<div>
+												<button className="btn btn-large waves-effect waves-light" type="submit">
+													SEND
+												</button>
+											</div>
+										</Form>
 									)}
 								</Formik>
 							</div>

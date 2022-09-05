@@ -36,6 +36,12 @@ const Reset = () => {
 				<div className="row">
 					<div className=" col s12 l8 offset-l2 center-align white-text">
 						<h1>Reset password</h1>
+						{successMessage && <div className="material-alert success left-align" role="alert">
+							{successMessage}
+						</div>}
+						{errorMessage && <div className="material-alert error">
+							{errorMessage}
+						</div>}
 						<div className="card teal accent-4">
 							<div className="card-content">
 								<Formik
@@ -51,13 +57,12 @@ const Reset = () => {
 									}}
 								>
 									{({ errors, touched, handleSubmit }) => (<>
-										<Form onSubmit={e => handleSubmit(e)}>
+										<Form onSubmit={e => handleSubmit(e)} onChange={(() => setSuccessMessage(null), () => setErrorMessage(null))}>
 											<div className="input-field">
 												<label className="auth-form-label" htmlFor="new_password">New password</label>
 												<Field
 													name="new_password"
 													type={visibilityToggle ? 'text' : 'password'}
-													onFocus={(() => setSuccessMessage(null), () => setErrorMessage(null))}
 												/>
 												{errors.new_password && touched.new_password ? (
 													<div>{errors.new_password}</div>
@@ -69,7 +74,6 @@ const Reset = () => {
 												<Field
 													name="repeat_password"
 													type={visibilityToggleRepeat ? 'text' : 'password'}
-													onFocus={(() => setSuccessMessage(null), () => setErrorMessage(null))}
 												/>
 												{errors.repeat_password && touched.repeat_password ? (
 													<div>{errors.repeat_password}</div>
@@ -87,12 +91,6 @@ const Reset = () => {
 								</Formik>
 							</div>
 						</div>
-						{successMessage && <div className="material-alert success left-align" role="alert">
-							{successMessage}
-						</div>}
-						{errorMessage && <div className="material-alert error">
-							{errorMessage}
-						</div>}
 					</div>
 				</div>
 			</div>

@@ -29,16 +29,7 @@ const SignIn = () => {
 					navigate('/verify', { replace: true, state: { from: { pathname: location.state?.from?.pathname } } });
 				}
 			} else if (res.data.status === 'error') {
-				switch (res.data.message) {
-					case "inactive_account":
-						setErrorMessage('Inactive account')
-						break
-					case "incorrect_auth_credentials":
-						setErrorMessage('Incorrect auth credentials')
-						break
-					default:
-						break
-				}
+				setErrorMessage(res.data.message)
 			}
 		})
 	}
@@ -81,10 +72,11 @@ const SignIn = () => {
 											password: values.password,
 											remember: values.rememberMe
 										})
+										setErrorMessage(null)
 									}}
 								>
 									{({ errors, touched, handleSubmit }) => (
-										<Form onSubmit={e => handleSubmit(e)} className="signup-form">
+										<Form onSubmit={e => handleSubmit(e)} className="signup-form" onChange={() => setErrorMessage(null)}>
 											<div className="row">
 												<div className="input-field col s12">
 													<Field
