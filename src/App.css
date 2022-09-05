@@ -668,6 +668,12 @@ div.polaroid {
 	
 }
 
+@media only screen and (max-width: 600px) {
+	.navbar-logo img {
+		height: 44px;
+	}
+}
+
 @media only screen and (max-width: 1500px) {
 	.content_no_img {
 		width: 100% !important;
