@@ -93,9 +93,11 @@ main>div:first-child {
 	background-color: transparent;
 	box-shadow: none;
 }
+
 .pointer {
 	cursor: pointer;
 }
+
 .back-btn {
 	position: absolute;
 	top: 8px;
@@ -444,10 +446,12 @@ input[type=password] {
 	height: 160px;
 	animation-delay: 11s;
 }
+
 .sidenav-overlay {
 	position: absolute !important;
 	z-index: 1 !important;
 }
+
 @keyframes square {
 	0% {
 		transform: translateY(0);
@@ -657,6 +661,13 @@ div.polaroid {
 	font-size: 15px;
 }
 
+@media only screen and (min-width: 993px) {
+	.mobileShow, #mobile-nav {
+		display: none !important;
+	}
+	
+}
+
 @media only screen and (max-width: 1500px) {
 	.content_no_img {
 		width: 100% !important;
@@ -667,14 +678,18 @@ div.polaroid {
 	div.polaroid {
 		width: 80%;
 	}
+
 	.postFotmTextarea {
 		min-height: 233px !important;
 	}
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 993px) {
 	div.polaroid {
 		width: 100%;
+	}
+	.sidenav li>a>i.material-icons {
+		margin-right: 15px !important;
 	}
 }
 
@@ -682,6 +697,7 @@ div.polaroid {
 	.postFotmTextarea {
 		min-height: 358px !important;
 	}
+
 	.modal {
 		width: 80%;
 	}

@@ -41,8 +41,9 @@ const NavBarMenu = () => {
 			}}
 			className="teal accent-4"
 		>
-			<Link to='posts'>Posts</Link>
-			{localStorage.getItem("isAuth")
+			<Link to='/' className="mobileShow"><Icon left >home</Icon>Home</Link>
+			<Link to='posts'><Icon left className="mobileShow" >assignment</Icon>Posts</Link>
+			{auth.firstname
 				&& <Dropdown
 					id="dropdown1"
 					options={{
@@ -66,8 +67,8 @@ const NavBarMenu = () => {
 					<NavItem href='#' onClick={signoutHandler}>Sign Out</NavItem>
 				</Dropdown>}
 
-			{(location.pathname !== '/signup' && !localStorage.getItem("isAuth")) && <Link to='/signup' >Sign Up</Link>}
-			{(location.pathname !== '/signin' && !localStorage.getItem("isAuth")) && <Link to='/signin' >Sign In</Link>}
+			{(location.pathname !== '/signup' && !auth.firstname) && <Link to='/signup' ><Icon left className="mobileShow">person_add</Icon>Sign Up</Link>}
+			{(location.pathname !== '/signin' && !auth.firstname) && <Link to='/signin' ><Icon left className="mobileShow">exit_to_app</Icon>Sign In</Link>}
 
 			<Dropdown
 				id="dropdown2"
