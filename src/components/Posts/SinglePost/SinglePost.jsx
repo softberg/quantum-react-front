@@ -3,6 +3,7 @@ import BackButton from '../../../partials/BackButton';
 import { useParams } from "react-router-dom";
 import { axiosRequest } from './../../../api/api';
 import { useNavigate } from 'react-router-dom';
+import SinglePostLoader from './../../../myLoader/SinglePostLoader';
 
 const SinglePost = () => {
 	const [post, setPost] = useState({});
@@ -27,7 +28,7 @@ const SinglePost = () => {
 			<div className="center-align posts-container">
 				<div className="polaroid">
 					{loading
-						? ''
+						? <SinglePostLoader />
 						: <>
 							<BackButton />
 							<h1 className="single-blog-title">{post.title}</h1>
