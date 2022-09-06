@@ -4,12 +4,17 @@ import Logo from './../Logo/Logo';
 import useAuth from './../../hooks/useAuth';
 import { axiosRequest } from './../../api/api';
 import { Dropdown, Icon, Navbar, NavItem } from 'react-materialize';
+import { useTranslation } from "react-i18next";
 
 const NavBarMenu = () => {
+	const { t, i18n } = useTranslation()
 	const { auth, setAuth } = useAuth();
 	const location = useLocation()
 	const navigate = useNavigate()
-
+	const onLanguageChange = (lang) => {
+		i18n.changeLanguage(lang)
+		localStorage.setItem('i18nextLng', lang)
+	}
 	const signoutHandler = () => {
 		axiosRequest('GET', '/api-signout').then(res => {
 			if (res.status === 200) {
@@ -41,8 +46,8 @@ const NavBarMenu = () => {
 			}}
 			className="teal accent-4"
 		>
-			<Link to='/' className="mobileShow"><Icon left >home</Icon>Home</Link>
-			<Link to='posts'><Icon left className="mobileShow" >assignment</Icon>Posts</Link>
+			<Link to='/' className="mobileShow"><Icon left >home</Icon>{t('home')}</Link>
+			<Link to='posts'><Icon left className="mobileShow" >assignment</Icon>{t('posts')}</Link>
 			{auth.firstname
 				&& <Dropdown
 					id="dropdown1"
@@ -63,12 +68,12 @@ const NavBarMenu = () => {
 					}}
 					trigger={<NavItem href='#'><Icon left >person</Icon>{auth.firstname} {auth.lastname}<Icon right>arrow_drop_down</Icon></NavItem>}
 				>
-					<Link to='/my-posts'>My Posts</Link>
-					<NavItem href='#' onClick={signoutHandler}>Sign Out</NavItem>
+					<Link to='/my-posts'>{t('my_posts')}</Link>
+					<NavItem href='#' onClick={signoutHandler}>{t('signout')}</NavItem>
 				</Dropdown>}
 
-			{(location.pathname !== '/signup' && !auth.firstname) && <Link to='/signup' ><Icon left className="mobileShow">person_add</Icon>Sign Up</Link>}
-			{(location.pathname !== '/signin' && !auth.firstname) && <Link to='/signin' ><Icon left className="mobileShow">exit_to_app</Icon>Sign In</Link>}
+			{(location.pathname !== '/signup' && !auth.firstname) && <Link to='/signup' ><Icon left className="mobileShow">person_add</Icon>{t('signup')}</Link>}
+			{(location.pathname !== '/signin' && !auth.firstname) && <Link to='/signin' ><Icon left className="mobileShow">exit_to_app</Icon>{t('signin')}</Link>}
 
 			<Dropdown
 				id="dropdown2"
@@ -87,11 +92,11 @@ const NavBarMenu = () => {
 					onOpenStart: null,
 					outDuration: 250
 				}}
-				trigger={<NavItem href="#!"><Icon left>language</Icon>Eng</NavItem>}
+				trigger={<NavItem href="#!"><Icon left>language</Icon>{t('lang')}</NavItem>}
 			>
-				<Link to='#'>English</Link>
-				<Link to='#'>Russian</Link>
-				<Link to='#'>Armenian</Link>
+				<Link to='#' onClick={() => onLanguageChange('en')}>{t('en')}</Link>
+				<Link to='#' onClick={() => onLanguageChange('ru')}>{t('ru')}</Link>
+				<Link to='#' onClick={() => onLanguageChange('am')}>{t('am')}</Link>
 			</Dropdown>
 		</Navbar>
 	</>

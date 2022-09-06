@@ -43,7 +43,10 @@ export const axiosRequest = async (method, url, postDataOrGetParam = '', token =
 				} else if (routesWithoutToken.includes(url)) {
 					return await apiConfig.get(url + postDataOrGetParam)
 				} else {
-					return { response: { status: 401 } }
+					return {
+						status: 401,
+						message: "An unexpected error"
+					}
 				}
 			} catch (err) {
 				console.log(err);

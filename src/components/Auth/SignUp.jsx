@@ -5,8 +5,10 @@ import useAuth from './../../hooks/useAuth';
 import { Form, Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from 'react-materialize';
+import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
+	const { t } = useTranslation()
 	const { auth } = useAuth()
 	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -47,7 +49,7 @@ const SignUp = () => {
 			<div className='container'>
 				<div className="row">
 					<div className="col s12 l8 offset-l2 center-align white-text">
-						<h1>Sign Up</h1>
+						<h1>{t('signup')}</h1>
 						{errorMessage && errorMessage.map((message, i) => <div key={i} className="material-alert error">
 							{message}
 						</div>)}
@@ -83,12 +85,12 @@ const SignUp = () => {
 													{errors.email && touched.email ? (
 														<div>{errors.email}</div>
 													) : null}
-													<label htmlFor="email">Email</label>
+													<label htmlFor="email">{t('email')}</label>
 												</div>
 											</div>
 											<div className="row">
 												<div className="input-field col s12">
-													<label className="auth-form-label" htmlFor="password">Password</label>
+													<label className="auth-form-label" htmlFor="password">{t('password')}</label>
 													<Field
 														onBlur={handleBlur}
 														name="password"
@@ -110,7 +112,7 @@ const SignUp = () => {
 													{errors.firstname && touched.firstname ? (
 														<div>{errors.firstname}</div>
 													) : null}
-													<label className="auth-form-label" htmlFor="firstname">First name</label>
+													<label className="auth-form-label" htmlFor="firstname">{t('first_name')}</label>
 												</div>
 											</div>
 											<div className="row">
@@ -123,18 +125,18 @@ const SignUp = () => {
 													{errors.lastname && touched.lastname ? (
 														<div>{errors.lastname}</div>
 													) : null}
-													<label className="auth-form-label" htmlFor="firstname">Last name</label>
+													<label className="auth-form-label" htmlFor="firstname">{t('last_name')}</label>
 												</div>
 											</div>
 											<div className="row">
 												<div className="col s12 right-align">
 													<Link to="/signin"
-														className="white-text">Sign In</Link>
+														className="white-text">{t('signin')}</Link>
 												</div>
 											</div>
 											<div>
 												<button className="btn btn-large waves-effect waves-light" type="submit">
-													SEND
+													{t('send')}
 												</button>
 											</div>
 										</Form>

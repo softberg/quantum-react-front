@@ -15,7 +15,7 @@ export const authMe = (setAuth, navigate = null, returnLocation) => {
 			if (navigate) {
 				navigate(returnLocation, { replace: true, state: '' });
 			}
-		} else if (res.response.status === 401) {
+		} else if (res.status === 401) {
 			localStorage.clear()
 			setAuth({})
 		}

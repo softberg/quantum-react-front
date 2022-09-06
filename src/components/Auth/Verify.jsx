@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { axiosRequest } from '../../api/api';
 import useAuth from './../../hooks/useAuth';
 import { authMe, setTokens } from './../../helpers/helpers';
+import { useTranslation } from 'react-i18next';
 
 const Verify = () => {
+	const { t } = useTranslation()
 	const { auth, setAuth } = useAuth();
 	const [otp, setOtp] = useState('');
 	const location = useLocation();
@@ -38,13 +40,13 @@ const Verify = () => {
 			<div className="container">
 				<div className="row">
 					<div className=" col s12 l8 offset-l2 center-align white-text">
-						<h1>2 Factor Authentication</h1>
+						<h1>{t('2fa')}</h1>
 						<div className="card teal accent-4">
 							<div className="card-content">
 								<form onSubmit={onSubmitHandler}>
 									<div className="form-container">
 										<div className="input-field">
-											<label htmlFor="otp" className="auth-form-label">One Time Password</label>
+											<label htmlFor="otp" className="auth-form-label">{t('otp')}</label>
 											<input
 												name="otp"
 												type="text"
@@ -53,12 +55,12 @@ const Verify = () => {
 											/>
 											<span onClick={reSendOtp} style={{ color: 'white', fontSize: '14px', cursor: 'pointer' }}
 												to='/'>
-												Resend otp
+												{t('resend_otp')}
 											</span>
 										</div>
 										<div>
 											<button className="btn btn-large waves-effect waves-light" type="submit">
-												SEND
+												{t('send')}
 											</button>
 										</div>
 									</div>

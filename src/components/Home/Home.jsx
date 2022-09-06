@@ -1,8 +1,11 @@
 import React from 'react'
 import Logo from '../Logo/Logo'
 import { Link } from 'react-router-dom';
+import Bubbles from '../Bubbles/Bubbles';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
+	const { t } = useTranslation()
 	return <>
 		<div className="main-wrapper teal accent-4">
 			<div className="container wrapper">
@@ -13,28 +16,17 @@ const Home = () => {
 					<h1>{process.env.REACT_APP_APP_NAME}</h1>
 					<div className="card teal accent-4">
 						<div className="card-content">
-							<h5>Very fast and extremely simple, next generation PHP MVC framework with modular structure, which makes it possible to create projects of any complexity.</h5>
+							<h5>{t('description')}</h5>
 						</div>
 					</div>
 					<div className="index-links">
-						<Link to="/about" className="white-text">About</Link>
-						<a href={process.env.REACT_APP_LEARN_MORE} target="_blank" rel="noreferrer" className="white-text">Learn More</a>
+						<Link to="/about" className="white-text">{t('about')}</Link>
+						<a href={process.env.REACT_APP_LEARN_MORE} target="_blank" rel="noreferrer" className="white-text">{t('learn_more')}</a>
 					</div>
 				</div>
 			</div>
 		</div>
-		<ul className="bg-bubbles">
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
+		<Bubbles />
 	</>
 }
 

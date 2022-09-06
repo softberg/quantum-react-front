@@ -4,8 +4,10 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from 'react-materialize';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Reset = () => {
+	const { t } = useTranslation()
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [successMessage, setSuccessMessage] = useState(null);
 	const [visibilityToggle, setvisibilityToggle] = useState(false);
@@ -14,7 +16,6 @@ const Reset = () => {
 	const navigate = useNavigate();
 
 	const onSubmitHandler = (passwords) => {
-		console.log(passwords);
 		axiosRequest('POST', '/api-reset/', passwords, params.reset_token).then(res => {
 			if (res.data.status === "success") {
 				navigate('/signin')
@@ -35,7 +36,7 @@ const Reset = () => {
 			<div className="container">
 				<div className="row">
 					<div className=" col s12 l8 offset-l2 center-align white-text">
-						<h1>Reset password</h1>
+						<h1>{t('reset_password')}</h1>
 						{successMessage && <div className="material-alert success left-align" role="alert">
 							{successMessage}
 						</div>}
@@ -59,7 +60,7 @@ const Reset = () => {
 									{({ errors, touched, handleSubmit }) => (<>
 										<Form onSubmit={e => handleSubmit(e)} onChange={(() => setSuccessMessage(null), () => setErrorMessage(null))}>
 											<div className="input-field">
-												<label className="auth-form-label" htmlFor="new_password">New password</label>
+												<label className="auth-form-label" htmlFor="new_password">{t('new_password')}</label>
 												<Field
 													name="new_password"
 													type={visibilityToggle ? 'text' : 'password'}
@@ -70,7 +71,7 @@ const Reset = () => {
 												<Icon className="visibility-icon" onClick={() => setvisibilityToggle(!visibilityToggle)}>{visibilityToggle ? 'visibility' : 'visibility_off'}</Icon>
 											</div>
 											<div className="input-field">
-												<label className="auth-form-label" htmlFor="repeat_password">Repeat password</label>
+												<label className="auth-form-label" htmlFor="repeat_password">{t('repeat_password')}</label>
 												<Field
 													name="repeat_password"
 													type={visibilityToggleRepeat ? 'text' : 'password'}
@@ -82,7 +83,7 @@ const Reset = () => {
 											</div>
 											<div>
 												<button className="btn btn-large waves-effect waves-light" type="submit">
-													SEND
+													{t('send')}
 												</button>
 											</div>
 										</Form>

@@ -1,8 +1,10 @@
 import React from 'react'
 import { Icon } from 'react-materialize';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const MyPostItem = ({ post,setId }) => {
+	const {t}=useTranslation()
 	return <>
 		<li className="collection-item avatar">
 			<img src={post.image ? post.image : process.env.REACT_APP_API_URL + '/assets/images/no-image.png'} className="circle img-my-post" alt='' />
@@ -15,7 +17,7 @@ const MyPostItem = ({ post,setId }) => {
 				{post.updated_at} <br />
 				{post.author ? post.author : ''}
 			</p>
-			<Link to={'/update-post/' + post.uuid} className="secondary-content edit-my-post" title="Edit" style={{ right: '50px' }}>
+			<Link to={'/update-post/' + post.uuid} className="secondary-content edit-my-post" title={t('edit')} style={{ right: '50px' }}>
 				<Icon>edit</Icon>
 			</Link>
 			<span

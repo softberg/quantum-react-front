@@ -1,7 +1,9 @@
 import { Modal, Button } from 'react-materialize'
 import { axiosRequest } from '../../api/api'
+import { useTranslation } from 'react-i18next';
 
 const DeleteModal = ({ url, id, setState, item }) => {
+	const { t } = useTranslation()
 	const onDeleteHandler = () => {
 		axiosRequest('DELETE', url, id)
 			.then(res => {
@@ -13,14 +15,14 @@ const DeleteModal = ({ url, id, setState, item }) => {
 	return <>
 		<Modal
 			actions={[
-				<Button flat modal="close" node="button" waves="green">CANCEL</Button>,
+				<Button flat modal="close" node="button" waves="green">{t('cancel')}</Button>,
 				<Button
 					className="red lighten-2"
 					node="button"
 					waves="green"
 					modal="close"
 					onClick={onDeleteHandler}
-				>YES</Button>
+				>{t('yes')}</Button>
 			]}
 			bottomSheet={false}
 			fixedFooter={false}
@@ -40,7 +42,7 @@ const DeleteModal = ({ url, id, setState, item }) => {
 				startingTop: '4%'
 			}}
 		>
-			<p>Are you sure you want to delete the the {item} ?</p>
+			<p>{t('confirm_delete', {item})}</p>
 		</Modal>
 	</>
 }

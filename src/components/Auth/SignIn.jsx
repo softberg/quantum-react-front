@@ -6,9 +6,11 @@ import { authMe, setTokens } from './../../helpers/helpers';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from 'react-materialize';
+import { useTranslation } from 'react-i18next';
 
 
 const SignIn = () => {
+	const { t } = useTranslation()
 	const { auth, setAuth } = useAuth()
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -53,7 +55,7 @@ const SignIn = () => {
 			<div className='container'>
 				<div className="row">
 					<div className="col s12 l8 offset-l2 center-align white-text">
-						<h1>Sign In</h1>
+						<h1>{t('signin')}</h1>
 						{errorMessage && <div className="material-alert error">
 							{errorMessage}
 						</div>}
@@ -86,12 +88,12 @@ const SignIn = () => {
 													{errors.email && touched.email ? (
 														<div>{errors.email}</div>
 													) : null}
-													<label htmlFor="email">Email</label>
+													<label htmlFor="email">{t('email')}</label>
 												</div>
 											</div>
 											<div className="row">
 												<div className="input-field col s12">
-													<label className="auth-form-label" htmlFor="password">Password</label>
+													<label className="auth-form-label" htmlFor="password">{t('password')}</label>
 													<Field
 														name="password"
 														type={visibilityToggle ? 'text' : 'password'}
@@ -106,12 +108,12 @@ const SignIn = () => {
 												<div className="col s12 l6">
 													<div className="row">
 														<div className="col s12 left-align">
-															<Link to="/signup" className="white-text">Sign Up</Link>
+															<Link to="/signup" className="white-text">{t('signup')}</Link>
 														</div>
 													</div>
 													<div className="row">
 														<div className="col s12 left-align">
-															<Link to="/forget" className="white-text">Forgot password?</Link>
+															<Link to="/forget" className="white-text">{t('forget_password')}</Link>
 														</div>
 													</div>
 												</div>
@@ -122,13 +124,13 @@ const SignIn = () => {
 																name="rememberMe"
 																className="checkbox-white"
 															/>
-															<span className="white-text">Remember Me</span>
+															<span className="white-text">{t('remember_me')}</span>
 														</label>
 													</div> */}
 											</div>
 											<div className="row">
 												<button className="btn btn-large waves-effect waves-light" type="submit">
-													SIGN IN
+												{t('signin')}
 												</button>
 											</div>
 										</Form>

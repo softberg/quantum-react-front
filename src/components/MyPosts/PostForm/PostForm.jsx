@@ -4,8 +4,10 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { axiosRequest } from './../../../api/api';
 import { Row, Textarea, TextInput, Icon, Button } from 'react-materialize';
 import DeleteModal from '../DeleteModal';
+import { useTranslation } from 'react-i18next';
 
 const PostForm = ({ pageTitle }) => {
+	const { t } = useTranslation()
 	const params = useParams()
 	const navigate = useNavigate()
 	const [postForm, setpostForm] = useState({});
@@ -73,8 +75,8 @@ const PostForm = ({ pageTitle }) => {
 								<form onSubmit={onSubmitHandler}>
 									<Row>
 										<TextInput
+											label={t('title')}
 											id="title"
-											label="Title"
 											value={postTitle}
 											onChange={(e) => setpostTitle(e.target.value)}
 											name="title"
@@ -84,6 +86,7 @@ const PostForm = ({ pageTitle }) => {
 									</Row>
 									<Row>
 										<Textarea
+											label={t('content')}
 											className={pageTitle === 'Update Post' ? 'postFotmTextarea' : ''}
 											s={12}
 											value={postContent}
@@ -91,7 +94,6 @@ const PostForm = ({ pageTitle }) => {
 											name="content"
 											id="content"
 											data-length="1000"
-											label="Content"
 										/>
 									</Row>
 									<div className="file-field input-field upload-btn">
@@ -114,21 +116,22 @@ const PostForm = ({ pageTitle }) => {
 													className="waves-effect waves-light btn modal-trigger image_delete"
 													href="#modal1"
 													node="button"
+													title={t('delete')}
 												>
 													<Icon>close</Icon>
 												</Button>
-												<DeleteModal url='/api-my-posts/delete-image/' id={postForm.id} setState={deleteImage} item='image' />
+												<DeleteModal url='/api-my-posts/delete-image/' id={postForm.id} setState={deleteImage} item={t('the_image')} />
 												<img src={postForm.image} className="update_page_img" alt='' />
 											</>
 										}
 									</div>
 									<div className="center-align">
 										<button className="btn btn-large waves-effect waves-light submit-btn" type="submit">
-											SAVE
+											{t('save')}
 										</button>
 										<Link to="/my-posts"
 											className="btn btn-large waves-effect waves-teal btn-flat white-text">
-											CANCEL
+											{t('cancel')}
 										</Link>
 									</div>
 								</form>
