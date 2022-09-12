@@ -2,21 +2,22 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { axiosRequest } from './../../api/api';
 import { useTranslation } from 'react-i18next';
+import { authRequests } from '../../api/api';
 
 const Forget = () => {
 	const { t } = useTranslation()
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [successMessage, setSuccessMessage] = useState(null);
 	const onSubmitHandler = (email) => {
-		axiosRequest('POST', '/api-forget', email).then(res => {
-			if (res.data.status === "success") {
-				setSuccessMessage(res.data.message)
-			} else if (res.data.status === 'error') {
-				setErrorMessage(res.data.message[0])
-			}
-		})
+		authRequests.forget(email)
+			.then(res => {
+				if (res.data.status === "success") {
+					setSuccessMessage(res.data.message)
+				} else if (res.data.status === 'error') {
+					setErrorMessage(res.data.message[0])
+				}
+			})
 	}
 	const SignupSchema = Yup.object().shape({
 		email: Yup.string().email('Invalid email').required('Required'),

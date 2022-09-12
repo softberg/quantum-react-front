@@ -1,100 +1,72 @@
-import axios from 'axios'
-
+import apiConfig from './../hoc/AxiosInterceptor';
 
 const headers = (tokens) => {
-	return {
-		Authorization: 'Bearer ' + tokens.access_token,
-		refresh_token: tokens.refresh_token
-	}
+    return {
+        Authorization: 'Bearer ' + tokens.access_token,
+        refresh_token: tokens.refresh_token
+    }
 }
 
-const apiConfig = axios.create({
-	baseURL: process.env.REACT_APP_API_URL,
-})
+export const authRequests = {
+    authMe(tokens) {
+        return apiConfig.get('/api-me', { headers: headers(tokens) })
+    },
 
-const routesWithoutToken = ['/api-posts', '/api-post/', '/api-signin', '/api-signup', '/api-verify', '/api-forget', '/api-reset/', '/api-resend/']
+    signOut(tokens) {
+        return apiConfig.get('/api-signout', { headers: headers(tokens) })
+    },
 
-apiConfig.interceptors.response.use(
-	response => response,
-	error => {
-		if (!error.response) {
-			console.log('?', error);
-		}
-		if (error.response.status === 401) {
-			localStorage.clear()
-		}
-		// if (error.response.status === 404) {
-		// 	return
-		// }
-		console.log(error);
-		return error;
-	});
+    signIn(loginData) {
+        return apiConfig.post('/api-signin', loginData)
+    },
 
-export const axiosRequest = async (method, url, postDataOrGetParam = '', token = '') => {
-	const tokens = {
-		access_token: localStorage.getItem('access_token'),
-		refresh_token: localStorage.getItem('refresh_token'),
-	};
-	switch (method) {
-		case 'GET':
-			try {
-				if (tokens.access_token !== null && !routesWithoutToken.includes(url)) {
-					return await apiConfig.get(url + postDataOrGetParam, { headers: headers(tokens) });
-				} else if (routesWithoutToken.includes(url)) {
-					return await apiConfig.get(url + postDataOrGetParam)
-				} else {
-					return {
-						status: 401,
-						message: "An unexpected error"
-					}
-				}
-			} catch (err) {
-				console.log(err);
-			}
-			break;
+    signUp(loginData) {
+        return apiConfig.post('/api-signup', loginData)
+    },
 
-		case 'POST':
-			try {
-				if (tokens.access_token !== null) {
-					return await apiConfig.post(url, postDataOrGetParam, { headers: headers(tokens) })
-				} else if (routesWithoutToken.includes(url)) {
-					return await apiConfig.post(url + token, postDataOrGetParam)
-				} else {
-					return { status: 401 }
-				}
-			} catch (err) {
-				console.log(err);
-			}
-			break;
-		case 'PUT':
+    verify(verifyData) {
+        return apiConfig.post('/api-verify', verifyData)
+    },
 
-			try {
-				if (tokens.access_token !== null) {
-					return await apiConfig.put(url, postDataOrGetParam, { headers: headers(tokens) })
-				} else if (routesWithoutToken.includes(url)) {
-					return await apiConfig.post(url, postDataOrGetParam)
-				} else {
-					return { status: 401 }
-				}
-			} catch (err) {
-				console.log(err);
-			}
-			break;
-		case 'DELETE':
+    resend(code) {
+        return apiConfig.get('/api-resend', code)
+    },
 
-			try {
-				if (tokens.access_token !== null) {
-					return await apiConfig.delete(url + postDataOrGetParam, { headers: headers(tokens) })
-				} else {
-					return { status: 401 }
-				}
-			} catch (err) {
-				console.log(err);
-			}
-			break;
+    reset(resetToken, passwords) {
+        return apiConfig.post(`/api-reset/${resetToken}`, passwords)
+    },
 
-		default:
-			break;
-	}
+    forget(email) {
+        return apiConfig.post('/api-fprget', email)
+    },
 
+    activate(activateToken) {
+        return apiConfig.get(`/api-activate/${activateToken}`)
+    }
+}
+
+export const getPosts = {
+    getAllPosts() {
+        return apiConfig.get('/api-posts')
+    },
+
+    getPostById(id) {
+        return apiConfig.get(`/api-post/${id}`)
+    },
+
+    getMyPosts(tokens) {
+        return apiConfig.get('/api-my-posts', { headers: headers(tokens) })
+    },
+
+    createPost(postData, tokens) {
+        return apiConfig.post('/api-my-posts/create', postData, { headers: headers(tokens) })
+    },
+
+    updatePost(postId, postData, tokens) {
+        return apiConfig.put(`/api-my-posts/amend/${postId}`, postData, { headers: headers(tokens) })
+    },
+
+    deletePostOrImage(url, id, tokens) {
+        return apiConfig.delete(`/api-my-posts/${url}/${id}`, { headers: headers(tokens) })
+    }
 }

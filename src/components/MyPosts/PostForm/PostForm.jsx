@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import BackButton from '../../../partials/BackButton'
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { axiosRequest } from './../../../api/api';
 import { Row, Textarea, TextInput, Icon, Button } from 'react-materialize';
 import DeleteModal from '../DeleteModal';
 import { useTranslation } from 'react-i18next';
+import { getPosts } from '../../../api/api';
 
 const PostForm = ({ pageTitle }) => {
 	const { t } = useTranslation()
@@ -17,15 +17,16 @@ const PostForm = ({ pageTitle }) => {
 
 	useEffect(() => {
 		if (params.postId) {
-			axiosRequest('GET', '/api-post/', params.postId).then(res => {
-				if (res.status === 200) {
-					setpostForm(res.data.data)
-					setpostTitle(res.data.data.title)
-					setpostContent(res.data.data.content)
-				} else if (res.response.status === 404) {
-					navigate('/404')
-				}
-			})
+			getPosts.getPostById(params.postId)
+				.then(res => {
+					if (res.status === 200) {
+						setpostForm(res.data.data)
+						setpostTitle(res.data.data.title)
+						setpostContent(res.data.data.content)
+					} else if (res.response.status === 404) {
+						navigate('/404')
+					}
+				})
 		}
 	}, [params.postId, navigate]);
 
@@ -36,6 +37,10 @@ const PostForm = ({ pageTitle }) => {
 	}
 
 	const onSubmitHandler = (e) => {
+		const tokens = {
+			access_token: localStorage.getItem('access_token'),
+			refresh_token: localStorage.getItem('refresh_token'),
+		};
 		e.preventDefault()
 		const postData = new FormData()
 		selectedImage && postData.append('image', selectedImage)
@@ -43,7 +48,8 @@ const PostForm = ({ pageTitle }) => {
 		postData.append('content', postContent)
 
 		if (!params.postId) {
-			axiosRequest('POST', '/api-my-posts/create', postData)
+			getPosts.createPost(postData, tokens)
+				// axiosRequest('POST', '/api-my-posts/create', postData)
 				.then(res => {
 					if (res.data.status === 'success') {
 						navigate('/my-posts')
@@ -52,7 +58,8 @@ const PostForm = ({ pageTitle }) => {
 					}
 				})
 		} else {
-			axiosRequest('PUT', '/api-my-posts/amend/' + params.postId, postData)
+			getPosts.updatePost(params.postId, postData, tokens)
+				// axiosRequest('PUT', '/api-my-posts/amend/' + params.postId, postData)
 				.then(res => {
 					if (res.status === 200) {
 						navigate('/my-posts')
@@ -120,7 +127,7 @@ const PostForm = ({ pageTitle }) => {
 												>
 													<Icon>close</Icon>
 												</Button>
-												<DeleteModal url='/api-my-posts/delete-image/' id={postForm.id} setState={deleteImage} item={t('the_image')} />
+												<DeleteModal url='delete-image' id={postForm.id} setState={deleteImage} item={t('the_image')} />
 												<img src={postForm.image} className="update_page_img" alt='' />
 											</>
 										}

@@ -1,10 +1,9 @@
-import React from 'react'
 import Bubbles from './../Bubbles/Bubbles';
 import { useTranslation } from 'react-i18next';
 
 const About = () => {
 	const { t } = useTranslation()
-
+	document.title = t('about') + " | " + process.env.REACT_APP_APP_NAME
 	return <>
 		<div className="main-wrapper teal accent-4">
 			<div className="container wrapper center-align white-text">

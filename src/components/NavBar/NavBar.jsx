@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Logo from './../Logo/Logo';
 import useAuth from './../../hooks/useAuth';
-import { axiosRequest } from './../../api/api';
 import { Dropdown, Icon, Navbar, NavItem } from 'react-materialize';
 import { useTranslation } from "react-i18next";
+import { authRequests } from "../../api/api";
 
 const NavBarMenu = () => {
 	const { t, i18n } = useTranslation()
@@ -16,13 +16,18 @@ const NavBarMenu = () => {
 		localStorage.setItem('i18nextLng', lang)
 	}
 	const signoutHandler = () => {
-		axiosRequest('GET', '/api-signout').then(res => {
-			if (res.status === 200) {
-				localStorage.clear()
-				navigate('/signin')
-				setAuth({ firstname: '', lastname: '', access_token: '' })
-			}
-		})
+		const tokens = {
+			access_token: localStorage.getItem('access_token'),
+			refresh_token: localStorage.getItem('refresh_token'),
+		};
+		authRequests.signOut(tokens)
+			.then(res => {
+				if (res.status === 200) {
+					localStorage.clear()
+					navigate('/signin')
+					setAuth({ firstname: '', lastname: '', access_token: '' })
+				}
+			})
 	}
 
 	return <>

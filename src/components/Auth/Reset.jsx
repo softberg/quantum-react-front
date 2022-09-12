@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { axiosRequest } from '../../api/api';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from 'react-materialize';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { authRequests } from '../../api/api';
 
 const Reset = () => {
 	const { t } = useTranslation()
@@ -16,13 +16,14 @@ const Reset = () => {
 	const navigate = useNavigate();
 
 	const onSubmitHandler = (passwords) => {
-		axiosRequest('POST', '/api-reset/', passwords, params.reset_token).then(res => {
-			if (res.data.status === "success") {
-				navigate('/signin')
-			} else if (res.data.status === 'error') {
-				setErrorMessage(res.data.message[0])
-			}
-		})
+		authRequests.reset(params.reset_token, passwords)
+			.then(res => {
+				if (res.data.status === "success") {
+					navigate('/signin')
+				} else if (res.data.status === 'error') {
+					setErrorMessage(res.data.message[0])
+				}
+			})
 	}
 	const SignupSchema = Yup.object().shape({
 		new_password: Yup.string()

@@ -1,9 +1,9 @@
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { axiosRequest } from '../../api/api';
 import useAuth from './../../hooks/useAuth';
 import { authMe, setTokens } from './../../helpers/helpers';
 import { useTranslation } from 'react-i18next';
+import { authRequests } from '../../api/api';
 
 const Verify = () => {
 	const { t } = useTranslation()
@@ -15,22 +15,24 @@ const Verify = () => {
 	const onSubmitHandler = async (e) => {
 		e.preventDefault()
 		const verifyData = { otp, code: auth.code }
-		axiosRequest('POST', '/api-verify', verifyData).then(res => {
-			if (res.data.status === "success") {
-				const returnLocation = location.state?.from?.pathname ? location.state.from?.pathname : '/'
-				setTokens(res.data.tokens)
-				authMe(setAuth, navigate, returnLocation)
-			} else if (res.data.status === "error") {
-				console.error('Error message', res.data.message);
-			}
-		})
+		authRequests.verify(verifyData)
+			.then(res => {
+				if (res.data.status === "success") {
+					const returnLocation = location.state?.from?.pathname ? location.state.from?.pathname : '/'
+					setTokens(res.data.tokens)
+					authMe(setAuth, navigate, returnLocation)
+				} else if (res.data.status === "error") {
+					console.error('Error message', res.data.message);
+				}
+			})
 	}
 	const reSendOtp = () => {
-		axiosRequest('GET', '/api-resend/', auth.code).then(res => {
-			if (res.data.status === "success") {
-				setAuth({ code: res.data.code })
-			}
-		})
+		authRequests.resend(auth.code)
+			.then(res => {
+				if (res.data.status === "success") {
+					setAuth({ code: res.data.code })
+				}
+			})
 	}
 	if (!auth.code) {
 		return <Navigate to='/signin' />

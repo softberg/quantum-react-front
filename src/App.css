@@ -300,9 +300,11 @@ a:hover {
 }
 
 .post-title {
+	width: 90%;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+	display: block;
 }
 
 .card-image-box img {
@@ -445,6 +447,11 @@ input[type=password] {
 	width: 160px;
 	height: 160px;
 	animation-delay: 11s;
+}
+
+.sidenav {
+	width: unset !important;
+	min-width: 300px !important;
 }
 
 .sidenav-overlay {

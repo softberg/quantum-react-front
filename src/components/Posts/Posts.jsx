@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import PostItem from './PostItem/PostItem';
-import { axiosRequest } from '../../api/api';
 import PostsLoader from '../../myLoader/PostsLoader';
 import { useTranslation } from 'react-i18next';
+import { getPosts } from '../../api/api';
 
 const Posts = () => {
 	const { t } = useTranslation()
@@ -10,13 +10,16 @@ const Posts = () => {
 	const [allPosts, setallPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
-		axiosRequest('GET', '/api-posts').then(res => {
-			if (res.status === 200) {
-				setallPosts(res.data.data)
-				setLoading(false)
-			}
-		})
-	}, []);
+		document.title = t('posts') + " | " + process.env.REACT_APP_APP_NAME
+		getPosts.getAllPosts()
+			.then(res => {
+				console.log(res);
+				if (res.status === 200) {
+					setallPosts(res.data.data)
+					setLoading(false)
+				}
+			})
+	}, [t]);
 
 	const loader = []
 	for (let i = 0; i < 8; i++) {

@@ -24,6 +24,7 @@ function App() {
 	const { setAuth } = useAuth()
 	const { t } = useTranslation()
 	useEffect(() => {
+        document.title = process.env.REACT_APP_APP_NAME
 		authMe(setAuth)
 	}, [setAuth]);
 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { axiosRequest } from '../../api/api';
 import useAuth from './../../hooks/useAuth';
 import { Form, Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from 'react-materialize';
 import { useTranslation } from 'react-i18next';
+import { authRequests } from '../../api/api';
 
 const SignUp = () => {
 	const { t } = useTranslation()
@@ -15,13 +15,14 @@ const SignUp = () => {
 	const [visibilityToggle, setvisibilityToggle] = useState(false);
 
 	const onSubmitHandler = async (loginData) => {
-		axiosRequest('POST', '/api-signup', loginData).then(res => {
-			if (res.data.status === "success") {
-				navigate('/signin')
-			} else if (res.data.status === 'error') {
-				setErrorMessage(res.data.message.email)
-			}
-		})
+		authRequests.signUp(loginData)
+			.then(res => {
+				if (res.data.status === "success") {
+					navigate('/signin')
+				} else if (res.data.status === 'error') {
+					setErrorMessage(res.data.message.email)
+				}
+			})
 	}
 
 	if (auth.firstname) {

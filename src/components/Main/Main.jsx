@@ -3,6 +3,7 @@ import Footer from "../Footer/Footer";
 import NavBarMenu from '../NavBar/NavBar';
 import useAuth from '../../hooks/useAuth';
 import { motion } from "framer-motion";
+import { AxiosInterceptor } from "../../hoc/AxiosInterceptor";
 
 const PageLayout = ({ children }) => children;
 
@@ -20,8 +21,8 @@ const pageVariants = {
 
 const pageTransition = {
 	type: "tween",
-	ease: "linear",
-	duration: .8
+	ease: "easeIn",
+	duration: .5
 };
 
 
@@ -33,20 +34,22 @@ const Main = () => {
 		<header>
 			<NavBarMenu />
 		</header>
-		{auth.loading
-			? <main></main>
-			: <PageLayout>
-				<motion.main
-					key={pathname}
-					initial="initial"
-					animate="in"
-					variants={pageVariants}
-					transition={pageTransition}
-				>
-					<Outlet />
-				</motion.main>
-			</PageLayout>
-		}
+		<AxiosInterceptor>
+			{auth.loading
+				? <main></main>
+				: <PageLayout>
+					<motion.main
+						key={pathname}
+						initial="initial"
+						animate="in"
+						variants={pageVariants}
+						transition={pageTransition}
+					>
+						<Outlet />
+					</motion.main>
+				</PageLayout>
+			}
+		</AxiosInterceptor>
 		<footer className='page-footer'>
 			<Footer />
 		</footer>

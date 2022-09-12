@@ -1,12 +1,18 @@
 import { Modal, Button } from 'react-materialize'
-import { axiosRequest } from '../../api/api'
 import { useTranslation } from 'react-i18next';
+import { getPosts } from '../../api/api';
 
 const DeleteModal = ({ url, id, setState, item }) => {
+	console.log({ url, id, setState, item });
 	const { t } = useTranslation()
 	const onDeleteHandler = () => {
-		axiosRequest('DELETE', url, id)
+		const tokens = {
+			access_token: localStorage.getItem('access_token'),
+			refresh_token: localStorage.getItem('refresh_token'),
+		};
+		getPosts.deletePostOrImage(url, id, tokens)
 			.then(res => {
+				console.log(res);
 				if (res.data.status === 'success') {
 					setState(id)
 				}
@@ -42,7 +48,7 @@ const DeleteModal = ({ url, id, setState, item }) => {
 				startingTop: '4%'
 			}}
 		>
-			<p>{t('confirm_delete', {item})}</p>
+			<p>{t('confirm_delete', { item })}</p>
 		</Modal>
 	</>
 }
