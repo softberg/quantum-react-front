@@ -3,7 +3,7 @@ import { useState } from 'react';
 import useAuth from './../../hooks/useAuth';
 import { authMe, setTokens } from './../../helpers/helpers';
 import { useTranslation } from 'react-i18next';
-import { authRequests } from '../../api/api';
+import { authApi } from '../../api/authApi';
 
 const Verify = () => {
 	const { t } = useTranslation()
@@ -11,11 +11,12 @@ const Verify = () => {
 	const [otp, setOtp] = useState('');
 	const location = useLocation();
 	const navigate = useNavigate();
+	document.title = t('2fa') + " | " + process.env.REACT_APP_APP_NAME
 
 	const onSubmitHandler = async (e) => {
 		e.preventDefault()
 		const verifyData = { otp, code: auth.code }
-		authRequests.verify(verifyData)
+		authApi.verify(verifyData)
 			.then(res => {
 				if (res.data.status === "success") {
 					const returnLocation = location.state?.from?.pathname ? location.state.from?.pathname : '/'
@@ -27,7 +28,7 @@ const Verify = () => {
 			})
 	}
 	const reSendOtp = () => {
-		authRequests.resend(auth.code)
+		authApi.resend(auth.code)
 			.then(res => {
 				if (res.data.status === "success") {
 					setAuth({ code: res.data.code })

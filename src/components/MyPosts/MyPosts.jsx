@@ -6,7 +6,7 @@ import { setTokens } from '../../helpers/helpers';
 import MyPostsLoader from '../../myLoader/MyPostsLoader';
 import { useTranslation } from 'react-i18next';
 import useAuth from './../../hooks/useAuth';
-import { getPosts } from '../../api/api';
+import { postApi } from '../../api/postApi';
 
 const MyPosts = () => {
 	const { setAuth } = useAuth()
@@ -16,11 +16,12 @@ const MyPosts = () => {
 	// const [errorMessage, seterrorMessage] = useState(null);
 	const [id, setId] = useState('')
 	useEffect(() => {
+		document.title = t('my_posts') + " | " + process.env.REACT_APP_APP_NAME
 		const tokens = {
 			access_token: localStorage.getItem('access_token'),
 			refresh_token: localStorage.getItem('refresh_token'),
 		};
-		getPosts.getMyPosts(tokens)
+		postApi.getMyPosts(tokens)
 			.then(res => {
 				if (res.status === 200) {
 					if (res.data.tokens) {

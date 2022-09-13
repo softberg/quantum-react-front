@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PostItem from './PostItem/PostItem';
 import PostsLoader from '../../myLoader/PostsLoader';
 import { useTranslation } from 'react-i18next';
-import { getPosts } from '../../api/api';
+import { postApi } from '../../api/postApi';
 
 const Posts = () => {
 	const { t } = useTranslation()
@@ -11,9 +11,8 @@ const Posts = () => {
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		document.title = t('posts') + " | " + process.env.REACT_APP_APP_NAME
-		getPosts.getAllPosts()
+		postApi.getAllPosts()
 			.then(res => {
-				console.log(res);
 				if (res.status === 200) {
 					setallPosts(res.data.data)
 					setLoading(false)
@@ -24,7 +23,7 @@ const Posts = () => {
 	const loader = []
 	for (let i = 0; i < 8; i++) {
 		loader.push(<div key={i} className="col s12 m3 post-item">
-			<div className="card post-card hoverable">
+			<div className="card post-card hoverable" style={{height:'536.5px'}}>
 				<PostsLoader />
 			</div>
 		</div>);

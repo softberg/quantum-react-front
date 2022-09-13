@@ -3,7 +3,7 @@ import BackButton from '../../../partials/BackButton';
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import SinglePostLoader from './../../../myLoader/SinglePostLoader';
-import { getPosts } from '../../../api/api';
+import { postApi } from '../../../api/postApi';
 
 const SinglePost = () => {
 	const [post, setPost] = useState({});
@@ -12,7 +12,7 @@ const SinglePost = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		getPosts.getPostById(params.postId)
+		postApi.getPostById(params.postId)
 			.then(res => {
 				if (res.status === 200) {
 					setPost(res.data.data)

@@ -2,7 +2,6 @@ import './App.css';
 import React, { lazy, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
 import { authMe } from './helpers/helpers';
-import { useTranslation } from 'react-i18next';
 import useAuth from './hooks/useAuth';
 import Main from './components/Main/Main';
 
@@ -22,7 +21,6 @@ const Reset 		= lazy(() => import('./components/Auth/Reset'));
 
 function App() {
 	const { setAuth } = useAuth()
-	const { t } = useTranslation()
 	useEffect(() => {
         document.title = process.env.REACT_APP_APP_NAME
 		authMe(setAuth)
@@ -44,8 +42,8 @@ function App() {
 					<Route path="/about" element={<About />} />
 					<Route element={<RequireAuth />}>
 						<Route path="/my-posts" element={<MyPosts />} />
-						<Route path="update-post/:postId" element={<PostForm pageTitle={t('update_post')} />} />
-						<Route path="create-post" element={<PostForm pageTitle={t('create_post')} />} />
+						<Route path="update-post/:postId" element={<PostForm pageTitle='update' />} />
+						<Route path="create-post" element={<PostForm pageTitle='create' />} />
 					</Route>
 				</Route>
 				<Route path="404" element={<NotFound />} />

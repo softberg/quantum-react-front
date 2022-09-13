@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Icon } from 'react-materialize';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { authRequests } from '../../api/api';
+import { authApi } from '../../api/authApi';
 
 const Reset = () => {
 	const { t } = useTranslation()
@@ -14,9 +14,9 @@ const Reset = () => {
 	const [visibilityToggleRepeat, setvisibilityToggleRepeat] = useState(false);
 	const params = useParams();
 	const navigate = useNavigate();
-
+	document.title = t('reset_password') + " | " + process.env.REACT_APP_APP_NAME
 	const onSubmitHandler = (passwords) => {
-		authRequests.reset(params.reset_token, passwords)
+		authApi.reset(params.reset_token, passwords)
 			.then(res => {
 				if (res.data.status === "success") {
 					navigate('/signin')

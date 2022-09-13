@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { authRequests } from '../../api/api';
+import { authApi } from '../../api/authApi';
 
 const Forget = () => {
 	const { t } = useTranslation()
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [successMessage, setSuccessMessage] = useState(null);
+	document.title = t('forget_password') + " | " + process.env.REACT_APP_APP_NAME
 	const onSubmitHandler = (email) => {
-		authRequests.forget(email)
+		authApi.forget(email)
 			.then(res => {
 				if (res.data.status === "success") {
 					setSuccessMessage(res.data.message)

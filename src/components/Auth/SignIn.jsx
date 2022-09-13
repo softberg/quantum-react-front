@@ -6,7 +6,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from 'react-materialize';
 import { useTranslation } from 'react-i18next';
-import { authRequests } from '../../api/api';
+import { authApi } from '../../api/authApi';
 
 
 const SignIn = () => {
@@ -16,10 +16,11 @@ const SignIn = () => {
     const location = useLocation();
     const [visibilityToggle, setvisibilityToggle] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+    document.title = t('signin') + " | " + process.env.REACT_APP_APP_NAME
 
     const onSubmitHandler = async ({ username, password, remember }) => {
         const loginData = { username, password, remember }
-        authRequests.signIn(loginData)
+        authApi.signIn(loginData)
             .then(res => {
                 if (res.data.status === "success") {
                     if (res.data.tokens) {

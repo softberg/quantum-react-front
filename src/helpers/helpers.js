@@ -1,11 +1,11 @@
-import { authRequests } from "../api/api";
+import { authApi } from "../api/authApi";
 
 export const authMe = (setAuth, navigate = null, returnLocation) => {
 	const tokens = {
 		access_token: localStorage.getItem('access_token'),
 		refresh_token: localStorage.getItem('refresh_token'),
 	};
-	authRequests.authMe(tokens)
+	authApi.authMe(tokens)
 		.then(res => {
 			console.log(res);
 			if (res.status === 200) {
@@ -23,7 +23,8 @@ export const authMe = (setAuth, navigate = null, returnLocation) => {
 					navigate(returnLocation, { replace: true, state: '' });
 				}
 			} else if (res.status === 401) {
-				localStorage.clear()
+				localStorage.removeItem('access_token')
+            localStorage.removeItem('refresh_token')
 				setAuth({})
 			}
 			setAuth(state => {
@@ -40,4 +41,9 @@ export const authMe = (setAuth, navigate = null, returnLocation) => {
 export const setTokens = (tokens) => {
 	localStorage.setItem("access_token", tokens.access_token);
 	localStorage.setItem("refresh_token", tokens.refresh_token);
+}
+
+export const currentLang = () => {
+    if (!localStorage.getItem('i18nextLng')) return ''
+    return localStorage.getItem('i18nextLng')
 }

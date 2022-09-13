@@ -1,11 +1,9 @@
-import axios from 'axios';
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { apiConfig } from '../api/api';
 import useAuth from './../hooks/useAuth';
 
-const apiConfig = axios.create({
-    baseURL: process.env.REACT_APP_API_URL
-})
+
 
 const AxiosInterceptor = ({ children }) => {
     const navigate = useNavigate();
@@ -22,11 +20,13 @@ const AxiosInterceptor = ({ children }) => {
             }
             if (error.response.status === 401) {
                 setAuth({})
-                localStorage.clear()
+                localStorage.removeItem('access_token')
+                localStorage.removeItem('refresh_token')
             }
             if (error.code === "ERR_NETWORK") {
                 setAuth({})
-                localStorage.clear()
+                localStorage.removeItem('access_token')
+                localStorage.removeItem('refresh_token')
 
                 return {
                     status: 500,

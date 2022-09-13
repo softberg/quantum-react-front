@@ -5,7 +5,7 @@ import { Form, Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from 'react-materialize';
 import { useTranslation } from 'react-i18next';
-import { authRequests } from '../../api/api';
+import { authApi } from '../../api/authApi';
 
 const SignUp = () => {
 	const { t } = useTranslation()
@@ -13,9 +13,10 @@ const SignUp = () => {
 	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [visibilityToggle, setvisibilityToggle] = useState(false);
-
+	document.title = t('signup') + " | " + process.env.REACT_APP_APP_NAME
+	
 	const onSubmitHandler = async (loginData) => {
-		authRequests.signUp(loginData)
+		authApi.signUp(loginData)
 			.then(res => {
 				if (res.data.status === "success") {
 					navigate('/signin')
