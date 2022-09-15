@@ -8,9 +8,9 @@ body #root {
 	flex-direction: column;
 }
 
-header {
+header nav {
 	position: relative;
-	z-index: 2;
+	z-index: 1;
 }
 
 h1 {
