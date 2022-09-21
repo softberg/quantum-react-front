@@ -23,6 +23,9 @@ const AxiosInterceptor = ({ children }) => {
                 localStorage.removeItem('access_token')
                 localStorage.removeItem('refresh_token')
             }
+            if (error.response.status === 404) {
+                navigate('/404')
+            }
             if (error.code === "ERR_NETWORK") {
                 setAuth({})
                 localStorage.removeItem('access_token')

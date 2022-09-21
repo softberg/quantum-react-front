@@ -18,6 +18,7 @@ const PostForm 		= lazy(() => import('./components/MyPosts/PostForm/PostForm'));
 const Verify 		= lazy(() => import('./components/Auth/Verify'));
 const Forget 		= lazy(() => import('./components/Auth/Forget'));
 const Reset 		= lazy(() => import('./components/Auth/Reset'));
+const ActivatePage 	= lazy(() => import('./components/Auth/ActivatePage'));
 
 function App() {
 	const { setAuth } = useAuth()
@@ -37,6 +38,7 @@ function App() {
 					<Route path="/signup" element={<SignUp />} />
 					<Route path="/signin" element={<SignIn />} />
 					<Route path="/forget" element={<Forget />} />
+					<Route path="/activate/:activate_token" element={<ActivatePage />} />
 					<Route path="/verify" element={<Verify />} />
 					<Route path="/reset/:reset_token" element={<Reset />} />
 					<Route path="/about" element={<About />} />
