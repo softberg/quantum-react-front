@@ -18,8 +18,8 @@ const SignIn = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     document.title = t('signin') + " | " + process.env.REACT_APP_APP_NAME
 
-    const onSubmitHandler = async ({ username, password, remember }) => {
-        const loginData = { username, password, remember }
+    const onSubmitHandler = async ({ email, password, remember }) => {
+        const loginData = { email, password, remember }
         authApi.signIn(loginData)
             .then(res => {
                 if (res.data.status === "success") {
@@ -72,7 +72,7 @@ const SignIn = () => {
                                     validationSchema={SignupSchema}
                                     onSubmit={values => {
                                         onSubmitHandler({
-                                            username: values.email,
+                                            email: values.email,
                                             password: values.password,
                                             remember: values.rememberMe
                                         })

@@ -32,6 +32,13 @@ const MyPosts = () => {
                 }
                 setloading(false)
             })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    setAuth({})
+                    localStorage.removeItem('access_token')
+                    localStorage.removeItem('refresh_token')
+                }
+            }) 
     }, [setAuth, t]);
 
     const loader = []
