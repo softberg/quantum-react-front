@@ -1,5 +1,4 @@
 import { apiConfig, headers } from "./api"
-import { currentLang } from './../helpers/helpers';
 
 export const postApi = {
     getAllPosts() {
@@ -15,14 +14,14 @@ export const postApi = {
     },
 
     createPost(postData, tokens) {
-        return apiConfig.post(`${currentLang()}/api/my-posts/create`, postData, { headers: headers(tokens) })
+        return apiConfig.post(`/api/my-posts/create`, postData, { headers: headers(tokens) })
     },
 
     updatePost(postId, postData, tokens) {
-        return apiConfig.put(`${currentLang()}/api/my-posts/amend/${postId}`, postData, { headers: headers(tokens) })
+        return apiConfig.put(`/api/my-posts/amend/${postId}`, postData, { headers: headers(tokens) })
     },
 
     deletePostOrImage(url, id, tokens) {
-        return apiConfig.delete(`${currentLang()}/api/my-posts/${url}/${id}`, { headers: headers(tokens) })
+        return apiConfig.delete(`/api/my-posts/${url}/${id}`, { headers: headers(tokens) })
     }
 }
