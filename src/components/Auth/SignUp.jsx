@@ -12,7 +12,7 @@ const SignUp = () => {
     const { auth } = useAuth()
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [visibilityToggle, setvisibilityToggle] = useState(false);
+    const [visibilityToggle, setVisibilityToggle] = useState(false);
     document.title = t('signup') + " | " + process.env.REACT_APP_APP_NAME
 
     const onSubmitHandler = async (loginData, resetForm) => {
@@ -105,7 +105,7 @@ const SignUp = () => {
                                                     {errors.password && touched.password ? (
                                                         <div>{errors.password}</div>
                                                     ) : null}
-                                                    <Icon className="visibility-icon" onClick={() => setvisibilityToggle(!visibilityToggle)}>{visibilityToggle ? 'visibility' : 'visibility_off'}</Icon>
+                                                    <Icon className="visibility-icon" onClick={() => setVisibilityToggle(!visibilityToggle)}>{visibilityToggle ? 'visibility' : 'visibility_off'}</Icon>
                                                 </div>
                                             </div>
                                             <div className="row">

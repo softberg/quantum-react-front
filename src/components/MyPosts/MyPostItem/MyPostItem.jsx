@@ -8,7 +8,7 @@ const MyPostItem = ({ post,setId }) => {
 	return <>
 		<li className="collection-item avatar">
 			<img src={post.image ? post.image : process.env.REACT_APP_API_URL + '/assets/images/no-image.png'} className="circle img-my-post" alt='' />
-			<span className="title post-title" title="<?php echo $post['title'] ?>">
+			<span className="title post-title" title={post.title}>
 				<Link className="teal-text post-title" to={'/posts/' + post.uuid}>
 					{post.title}
 				</Link>

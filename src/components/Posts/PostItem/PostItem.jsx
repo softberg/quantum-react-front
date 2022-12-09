@@ -13,7 +13,7 @@ const PostItem = ({ post, url }) => {
 					</div>
 				</Link>
 				<div className="card-content white teal-text text-darken-4">
-					<span className="card-title post-title" title="<?php echo $post['title'] ?>">
+					<span className="card-title post-title" title={post.title}>
 						<Link className="teal-text"
 							to={post.id}>
 							{post.title}
