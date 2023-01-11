@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PostItem from './PostItem/PostItem';
-import PostsLoader from '../../myLoader/PostsLoader';
+import PostsLoader from '../myLoader/PostsLoader';
 import { useTranslation } from 'react-i18next';
 import { postApi } from '../../api/postApi';
 
@@ -19,7 +19,6 @@ const Posts = () => {
 				}
 			})
 	}, [t]);
-
 	const loader = []
 	for (let i = 0; i < 8; i++) {
 		loader.push(<div key={i} className="col s12 m3 post-item">

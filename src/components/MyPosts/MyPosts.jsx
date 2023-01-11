@@ -3,42 +3,31 @@ import { Link } from 'react-router-dom';
 import MyPostItem from './MyPostItem/MyPostItem';
 import DeleteModal from './DeleteModal';
 import { setTokens } from '../../helpers/helpers';
-import MyPostsLoader from '../../myLoader/MyPostsLoader';
+import MyPostsLoader from '../myLoader/MyPostsLoader';
 import { useTranslation } from 'react-i18next';
 import useAuth from './../../hooks/useAuth';
 import { postApi } from '../../api/postApi';
 
 const MyPosts = () => {
-    const { setAuth } = useAuth()
+    const { setAuth,auth } = useAuth()
     const { t } = useTranslation()
     const [posts, setPosts] = useState([])
     const [loading, setloading] = useState(true);
     const [id, setId] = useState('')
     useEffect(() => {
         document.title = t('my_posts') + " | " + process.env.REACT_APP_APP_NAME
-        const tokens = {
-            access_token: localStorage.getItem('access_token'),
-            refresh_token: localStorage.getItem('refresh_token'),
-        };
-        postApi.getMyPosts(tokens)
-            .then(res => {
-                if (res.status === 200) {
-                    if (res.data.tokens) {
-                        setTokens(res.data.tokens)
+            postApi.getMyPosts()
+                .then(res => {
+                    if (res.status === 200) {
+                        if (res.data.tokens) {
+                            setTokens(res.data.tokens)
+                        }
+                        setPosts(res.data.data)
+                    } else if (res.status === 401) {
+                        setAuth({})
                     }
-                    setPosts(res.data.data)
-                } else if (res.status === 401) {
-                    setAuth({})
-                }
-                setloading(false)
-            })
-            .catch(error => {
-                if (error.response.status === 401) {
-                    setAuth({})
-                    localStorage.removeItem('access_token')
-                    localStorage.removeItem('refresh_token')
-                }
-            }) 
+                    setloading(false)
+                })
     }, [setAuth, t]);
 
     const loader = []

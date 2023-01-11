@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import BackButton from '../../../partials/BackButton'
+import BackButton from '../../partials/BackButton'
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Row, Textarea, TextInput, Icon, Button } from 'react-materialize';
 import DeleteModal from '../DeleteModal';
@@ -47,7 +47,6 @@ const PostForm = ({ pageTitle }) => {
         selectedImage && postData.append('image', selectedImage)
         postData.append('title', postTitle)
         postData.append('content', postContent)
-
         if (!params.postId) {
             postApi.createPost(postData, tokens)
                 .then(res => {
@@ -85,6 +84,7 @@ const PostForm = ({ pageTitle }) => {
                             <ul className="left-align">
                                 {errorMessage.title && <li>{errorMessage.title[0]}</li>}
                                 {errorMessage.content && <li>{errorMessage.content[0]}</li>}
+                                {errorMessage.image && <li>{errorMessage.image[0]}</li>}
                             </ul>
                         </div>}
                         <div className="card teal accent-4">
@@ -119,7 +119,9 @@ const PostForm = ({ pageTitle }) => {
                                             <input
                                                 type="file"
                                                 name="image"
-                                                onChange={(e) => setSelectedImage(e.target.files[0])}
+                                                onChange={(e) => {
+                                                    setSelectedImage(e.target.files[0])
+                                                }}
                                             />
                                         </div>
                                         <div className="file-path-wrapper">

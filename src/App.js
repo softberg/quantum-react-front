@@ -6,7 +6,7 @@ import useAuth from './hooks/useAuth';
 import Main from './components/Main/Main';
 
 const Home 			= lazy(() => import('./components/Home/Home'));
-const NotFound 		= lazy(() => import('./NotFound/NotFound'));
+const NotFound 		= lazy(() => import('./components/NotFound/NotFound'));
 const Posts 		= lazy(() => import('./components/Posts/Posts'));
 const SignUp 		= lazy(() => import('./components/Auth/SignUp'));
 const SignIn 		= lazy(() => import('./components/Auth/SignIn'));
@@ -26,8 +26,6 @@ function App() {
         document.title = process.env.REACT_APP_APP_NAME
 		authMe(setAuth)
 	}, [setAuth]);
-
-
 	return <>
 		<React.Suspense>
 			<Routes>

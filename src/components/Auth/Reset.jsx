@@ -10,8 +10,8 @@ const Reset = () => {
 	const { t } = useTranslation()
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [successMessage, setSuccessMessage] = useState(null);
-	const [visibilityToggle, setvisibilityToggle] = useState(false);
-	const [visibilityToggleRepeat, setvisibilityToggleRepeat] = useState(false);
+	const [visibilityToggle, setVisibilityToggle] = useState(false);
+	const [visibilityToggleRepeat, setVisibilityToggleRepeat] = useState(false);
 	const params = useParams();
 	const navigate = useNavigate();
 	document.title = t('reset_password') + " | " + process.env.REACT_APP_APP_NAME
@@ -25,7 +25,7 @@ const Reset = () => {
 				}
 			})
 	}
-	const SignupSchema = Yup.object().shape({
+	const signupSchema = Yup.object().shape({
 		new_password: Yup.string()
 			.min(6, 'Too Short!')
 			.max(16, 'Too Long!')
@@ -51,7 +51,7 @@ const Reset = () => {
 										new_password: '',
 										repeat_password: '',
 									}}
-									validationSchema={SignupSchema}
+									validationSchema={signupSchema}
 									onSubmit={values => {
 										onSubmitHandler({ password: values.new_password, repeat_password: values.repeat_password })
 										setErrorMessage(null)
@@ -59,7 +59,12 @@ const Reset = () => {
 									}}
 								>
 									{({ errors, touched, handleSubmit }) => (<>
-										<Form onSubmit={e => handleSubmit(e)} onChange={(() => setSuccessMessage(null), () => setErrorMessage(null))}>
+										<Form onSubmit={e => handleSubmit(e)}
+											  onChange={(
+												      () => setSuccessMessage(null),
+													  () => setErrorMessage(null)
+											  )}
+										>
 											<div className="input-field">
 												<label className="auth-form-label" htmlFor="new_password">{t('new_password')}</label>
 												<Field
@@ -69,7 +74,12 @@ const Reset = () => {
 												{errors.new_password && touched.new_password ? (
 													<div>{errors.new_password}</div>
 												) : null}
-												<Icon className="visibility-icon" onClick={() => setvisibilityToggle(!visibilityToggle)}>{visibilityToggle ? 'visibility' : 'visibility_off'}</Icon>
+												<Icon
+													className="visibility-icon"
+													onClick={() => setVisibilityToggle(!visibilityToggle)}
+												>
+													{visibilityToggle ? 'visibility' : 'visibility_off'}
+												</Icon>
 											</div>
 											<div className="input-field">
 												<label className="auth-form-label" htmlFor="repeat_password">{t('repeat_password')}</label>
@@ -80,10 +90,18 @@ const Reset = () => {
 												{errors.repeat_password && touched.repeat_password ? (
 													<div>{errors.repeat_password}</div>
 												) : null}
-												<Icon className="visibility-icon" onClick={() => setvisibilityToggleRepeat(!visibilityToggleRepeat)}>{visibilityToggleRepeat ? 'visibility' : 'visibility_off'}</Icon>
+												<Icon
+													className="visibility-icon"
+													onClick={() => setVisibilityToggleRepeat(!visibilityToggleRepeat)}
+												>
+													{visibilityToggleRepeat ? 'visibility' : 'visibility_off'}
+												</Icon>
 											</div>
 											<div>
-												<button className="btn btn-large waves-effect waves-light" type="submit">
+												<button
+													className="btn btn-large waves-effect waves-light"
+													type="submit"
+												>
 													{t('send')}
 												</button>
 											</div>
