@@ -14,7 +14,7 @@ const SignIn = () => {
     const { auth, setAuth } = useAuth()
     const navigate = useNavigate();
     const location = useLocation();
-    const [visibilityToggle, setvisibilityToggle] = useState(false);
+    const [visibilityToggle, setVisibilityToggle] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     document.title = t('signin') + " | " + process.env.REACT_APP_APP_NAME
 
@@ -22,7 +22,7 @@ const SignIn = () => {
         const loginData = { email, password, remember }
         authApi.signIn(loginData)
             .then(res => {
-                if (res.data.status === "success") {
+                if (res.data?.status === "success") {
                     if (res.data.tokens) {
                         const returnLocation = location.state?.from?.pathname ? location.state.from?.pathname : '/'
                         setTokens(res.data.tokens)
@@ -95,7 +95,12 @@ const SignIn = () => {
                                             </div>
                                             <div className="row">
                                                 <div className="input-field col s12">
-                                                    <label className="auth-form-label" htmlFor="password">{t('password')}</label>
+                                                    <label
+                                                        className="auth-form-label"
+                                                        htmlFor="password"
+                                                    >
+                                                        {t('password')}
+                                                    </label>
                                                     <Field
                                                         name="password"
                                                         type={visibilityToggle ? 'text' : 'password'}
@@ -103,19 +108,34 @@ const SignIn = () => {
                                                     {errors.password && touched.password ? (
                                                         <div>{errors.password}</div>
                                                     ) : null}
-                                                    <Icon className="visibility-icon" onClick={() => setvisibilityToggle(!visibilityToggle)}>{visibilityToggle ? 'visibility' : 'visibility_off'}</Icon>
+                                                    <Icon
+                                                        className="visibility-icon"
+                                                        onClick={() => setVisibilityToggle(!visibilityToggle)}
+                                                        >
+                                                        {visibilityToggle ? 'visibility' : 'visibility_off'}
+                                                    </Icon>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="col s12 l6">
                                                     <div className="row">
                                                         <div className="col s12 left-align">
-                                                            <Link to="/signup" className="white-text">{t('signup')}</Link>
+                                                            <Link
+                                                                to="/signup"
+                                                                className="white-text"
+                                                            >
+                                                                {t('signup')}
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                     <div className="row">
                                                         <div className="col s12 left-align">
-                                                            <Link to="/forget" className="white-text">{t('forget_password')}</Link>
+                                                            <Link
+                                                                to="/forget"
+                                                                className="white-text"
+                                                            >
+                                                                {t('forget_password')}
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -131,7 +151,9 @@ const SignIn = () => {
 													</div> */}
                                             </div>
                                             <div className="row">
-                                                <button className="btn btn-large waves-effect waves-light" type="submit">
+                                                <button className="btn btn-large waves-effect waves-light"
+                                                        type="submit"
+                                                >
                                                     {t('signin')}
                                                 </button>
                                             </div>

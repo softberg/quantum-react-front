@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import BackButton from '../../../partials/BackButton';
+import BackButton from '../../partials/BackButton';
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import SinglePostLoader from './../../../myLoader/SinglePostLoader';
+import SinglePostLoader from '../../myLoader/SinglePostLoader';
 import { postApi } from '../../../api/postApi';
 
 const SinglePost = () => {

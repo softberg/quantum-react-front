@@ -4,24 +4,19 @@ export const postApi = {
     getAllPosts() {
         return apiConfig.get('/api/posts')
     },
-
     getPostById(id) {
         return apiConfig.get(`/api/post/${id}`)
     },
-
-    getMyPosts(tokens) {
-        return apiConfig.get('/api/my-posts', { headers: headers(tokens) })
+    getMyPosts() {
+        return apiConfig.get('/api/my-posts',)
     },
-
-    createPost(postData, tokens) {
-        return apiConfig.post(`/api/my-posts/create`, postData, { headers: headers(tokens) })
+    createPost(postData) {
+        return apiConfig.post(`/api/my-posts/create`, postData)
     },
-
-    updatePost(postId, postData, tokens) {
-        return apiConfig.put(`/api/my-posts/amend/${postId}`, postData, { headers: headers(tokens) })
+    updatePost(postId, postData) {
+        return apiConfig.put(`/api/my-posts/amend/${postId}`, postData)
     },
-
-    deletePostOrImage(url, id, tokens) {
-        return apiConfig.delete(`/api/my-posts/${url}/${id}`, { headers: headers(tokens) })
+    deletePostOrImage(url, id) {
+        return apiConfig.delete(`/api/my-posts/${url}/${id}`)
     }
 }

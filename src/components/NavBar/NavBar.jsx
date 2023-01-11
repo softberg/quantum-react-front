@@ -34,6 +34,7 @@ const NavBarMenu = () => {
     return <>
         <Navbar
             alignLinks="right"
+            fixed={true}
             brand={<span className="navbar-logo">
                 {location.pathname !== '/' && <Logo />}
             </span>}
@@ -48,7 +49,8 @@ const NavBarMenu = () => {
                 onOpenEnd: null,
                 onOpenStart: null,
                 outDuration: 200,
-                preventScrolling: true
+                preventScrolling: true,
+
             }}
             className="teal accent-4"
         >

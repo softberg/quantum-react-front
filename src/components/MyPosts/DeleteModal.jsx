@@ -5,13 +5,8 @@ import { postApi } from '../../api/postApi';
 const DeleteModal = ({ url, id, setState, item }) => {
 	const { t } = useTranslation()
 	const onDeleteHandler = () => {
-		const tokens = {
-			access_token: localStorage.getItem('access_token'),
-			refresh_token: localStorage.getItem('refresh_token'),
-		};
-		postApi.deletePostOrImage(url, id, tokens)
+		postApi.deletePostOrImage(url, id)
 			.then(res => {
-				console.log(res);
 				if (res.data.status === 'success') {
 					setState(id)
 				}

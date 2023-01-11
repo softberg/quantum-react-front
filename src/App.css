@@ -87,11 +87,16 @@ main>div:first-child {
 
 #dropdown1 {
     min-width: 210px !important;
+	top: 65px !important;
 }
 #dropdown2 {
     min-width: 120px !important;
+	right: 0 !important;
+	top: 65px !important;
 }
+#dropdown2 li{
 
+}
 .transparent.no-box {
 	background-color: transparent;
 	box-shadow: none;
@@ -633,6 +638,7 @@ div.polaroid {
 	padding: 1px 8px;
 	background: rgba(255, 255, 255, 0.2);
 	border-radius: 50%;
+	color: #c5c5c5;
 }
 
 .modal {
