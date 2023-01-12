@@ -11,29 +11,3 @@ apiConfig.interceptors.request.use((config) => {
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-export const headers = (tokens) => {
-    return {
-        Authorization: 'Bearer ' + tokens.access_token,
-        refresh_token: tokens.refresh_token
-    }
-}
-

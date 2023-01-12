@@ -5,7 +5,6 @@ export const authMe = (setAuth, navigate = null, returnLocation) => {
 		access_token: localStorage.getItem('access_token'),
 		refresh_token: localStorage.getItem('refresh_token'),
 	};
-	if (tokens.access_token){
 		authApi.authMe(tokens)
 			.then(res => {
 				if (res.status === 200) {
@@ -35,7 +34,6 @@ export const authMe = (setAuth, navigate = null, returnLocation) => {
 					}
 				})
 			})
-	}
 }
 
 

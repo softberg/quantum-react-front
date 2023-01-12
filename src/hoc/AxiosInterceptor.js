@@ -5,7 +5,7 @@ import useAuth from './../hooks/useAuth';
 
 const AxiosInterceptor = ({ children }) => {
     const navigate = useNavigate();
-	const { setAuth } = useAuth()
+    const { setAuth } = useAuth()
 
     useEffect(() => {
 

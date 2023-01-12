@@ -1,4 +1,4 @@
-import { apiConfig, headers } from "./api"
+import { apiConfig } from "./api"
 
 export const postApi = {
     getAllPosts() {
