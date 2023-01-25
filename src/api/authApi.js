@@ -1,12 +1,12 @@
-import { apiConfig, headers } from './api';
+import { apiConfig } from './api';
 
 export const authApi = {
-    authMe(tokens) {
-        return apiConfig.get('/api/me', { headers: headers(tokens) })
+    authMe() {
+        return apiConfig.get('/api/me')
     },
 
-    signOut(tokens) {
-        return apiConfig.get(`/api/signout`, { headers: headers(tokens) })
+    signOut() {
+        return apiConfig.get(`/api/signout`)
     },
 
     signIn(loginData) {

@@ -1,4 +1,4 @@
-import Bubbles from './../Bubbles/Bubbles';
+import Bubbles from '../Bubbles/Bubbles';
 import { useTranslation } from 'react-i18next';
 
 const About = () => {

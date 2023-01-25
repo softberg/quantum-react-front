@@ -3,17 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import { apiConfig } from '../api/api';
 import useAuth from './../hooks/useAuth';
 
-
-
 const AxiosInterceptor = ({ children }) => {
     const navigate = useNavigate();
-	const { setAuth } = useAuth()
+    const { setAuth } = useAuth()
 
     useEffect(() => {
+
         const resInterceptor = response => {
             return response;
         }
-
         const errInterceptor = error => {
             if (!error.response) {
                 console.log('?', error);
@@ -39,10 +37,10 @@ const AxiosInterceptor = ({ children }) => {
             return error;
         }
 
-
         const interceptor = apiConfig.interceptors.response.use(resInterceptor, errInterceptor);
 
-        return () => apiConfig.interceptors.response.eject(interceptor);
+        return () =>apiConfig.interceptors.response.eject(interceptor);
+
 
     }, [navigate, setAuth])
 
