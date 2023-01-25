@@ -30,7 +30,6 @@ const Main = () => {
 	const { auth } = useAuth()
 	const { pathname } = useLocation();
 	return <>
-
 		<header>
 			<NavBarMenu />
 		</header>
